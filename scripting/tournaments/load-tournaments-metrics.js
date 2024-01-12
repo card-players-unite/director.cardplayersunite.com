@@ -1,17 +1,19 @@
 
 $(document).ready(function () {
 
+    // run it first
 
+    fillDashboardTournaments();
 
-displayPricingTickData();
+    // wait the amount of time then run the second one
 
-//##	setInterval(displayPricingTickData, 8 * 1000);
+    setInterval(displayPricingTickData, 10 * 1000);
 
 });
 
-function displayPricingTickData() {
+function fillDashboardTournaments() {
 
-	console.debug(" -> :: displayPricingTickData()");	
+	console.debug(" -> :: fillDashboardTournaments()");	
 
 	$.ajax({
 
@@ -25,57 +27,72 @@ function displayPricingTickData() {
 
 		success: function (responseData, status, jqXHR) {
 
-        //    alert("api got a call!");
+        console.log("responseData / ", responseData);
 
-	        console.log("responseData / ", responseData);
+        fillTournamentTable(responseData);
 
-            var trHTML = '';
+        countTournamentStatus(responseData);
 
-            for (var i = 0 ; i < responseData.length; i++) {
-	        
-                trHTML += '<tr class="text-gray-700 dark:text-gray-400">';
+	},
 
-                trHTML += '<td class="px-4 py-3 text-sm">' + responseData[i].id + '</td>';
+	error: function (jqXHR, status) {
 
-                trHTML += '<td class="px-4 py-3 text-sm">' + responseData[i].name + '</td>';
+		console.log("Something Went wrong");
 
-                trHTML += '<td class="px-4 py-3 text-sm">' + responseData[i].description + '</td>';	
+		console.log("exception");
+		
+		console.log(jqXHR);
 
-                trHTML += '<td class="px-4 py-3 text-sm">' + responseData[i].rental_price + '</td>';
+		console.log("status");
+		
+		console.log(status);
 
-        //        trHTML += '<td class="px-4 py-3 text-sm">' + responseData[i].rented_user_id + '</td>';
+	}});
 
-                     trHTML += ' <td class="px-4 py-3 text-xs">';
-                    trHTML += '    <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">';
+}
 
-//                    trHTML += '      Approved';
+function fillTournamentTable(responseData) {
 
-                    trHTML += responseData[i].rented_user_id
+    var htmlTableContents = '';
 
-                   trHTML += '     </span>';
-                  trHTML += '    </td>';
-            }
+    for (var i = 0 ; i < responseData.length; i++) {
 
-            $('#tournament-all-listing > tbody').html(trHTML); 
+        htmlTableContents += '<tr class="text-gray-700 dark:text-gray-400">';
 
-		},
+        htmlTableContents += '<td class="px-4 py-3 text-sm">' + responseData[i].id + '</td>';
 
-		error: function (jqXHR, status) {
+        htmlTableContents += '<td class="px-4 py-3 text-sm">' + responseData[i].name + '</td>';
 
-            alert("api failed!");
+        htmlTableContents += '<td class="px-4 py-3 text-sm">' + responseData[i].description + '</td>';	
 
-			console.log("Something Went wrong");
+        htmlTableContents += '<td class="px-4 py-3 text-sm">' + responseData[i].rental_price + '</td>';
 
-			console.log("exception");
-			
-			console.log(jqXHR);
+        htmlTableContents += ' <td class="px-4 py-3 text-xs">';
 
-			console.log("status");
-			
-			console.log(status);
+        htmlTableContents += '    <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">';
 
-		}
+        htmlTableContents += responseData[i].rented_user_id
 
-	});
+        htmlTableContents += '     </span>';
+
+        htmlTableContents += '    </td>';
+
+    }
+
+    $('#tournament-all-listing > tbody').html(htmlTableContents); 
+
+}
+
+function countTournamentStatus(responseData) {
+
+    alert("countTournamentStatus");
+
+    sizeAll = responseData.length;
+
+    $('#display-tournament-total-count').text(sizeAll); 
+
+    sizeUpcoming = -1;
+
+    $('#display-tournament-upcoming-count').text(sizeUpcoming); 
 
 }

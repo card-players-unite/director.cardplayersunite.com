@@ -1,5 +1,5 @@
 
-traderExchangeURL="http://localhost:8888";
+upstreamAPIURL="http://localhost:8888";
 
 currentTraderUsername="";
 

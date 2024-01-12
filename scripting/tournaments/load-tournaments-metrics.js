@@ -1,7 +1,9 @@
 
 $(document).ready(function () {
 
-    displayPricingTickData();
+
+
+displayPricingTickData();
 
 //##	setInterval(displayPricingTickData, 8 * 1000);
 
@@ -15,13 +17,15 @@ function displayPricingTickData() {
 
 		type: "GET",
 		
-		url: traderExchangeURL + "/tournaments/",
+		url: upstreamAPIURL + "/tournaments/",
 
 		contentType: "text/plain",
 		
 		crossDomain: true,				
 
 		success: function (responseData, status, jqXHR) {
+
+            alert("api got a call!");
 
 	        console.log("responseData / ", responseData);
 
@@ -48,6 +52,8 @@ function displayPricingTickData() {
 		},
 
 		error: function (jqXHR, status) {
+
+            alert("api failed!");
 
 			console.log("Something Went wrong");
 

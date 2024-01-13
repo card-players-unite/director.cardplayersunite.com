@@ -7,7 +7,7 @@ $(document).ready(function () {
 
     // wait the amount of time then run the second one
 
-    setInterval(displayPricingTickData, 10 * 1000);
+    //setInterval(fillDashboardTournaments, 10 * 1000);
 
 });
 
@@ -85,14 +85,47 @@ function fillTournamentTable(responseData) {
 
 function countTournamentStatus(responseData) {
 
-    alert("countTournamentStatus");
+//////////////////////////////////////////
 
-    sizeAll = responseData.length;
+    var countAll = responseData.length;
 
-    $('#display-tournament-total-count').text(sizeAll); 
+    $('#display-tournament-total-count').text(countAll); 
 
-    sizeUpcoming = -1;
+//////////////////////////////////////////
 
-    $('#display-tournament-upcoming-count').text(sizeUpcoming); 
+    var situationONE=555;
 
+    countUpcoming = 0;
+
+    responseData.forEach(data => {
+
+    if (data.rental_price===situationONE) { // Case-insensitive comparison
+
+      countUpcoming = countUpcoming + 1;
+
+    }
+
+    });
+
+    $('#display-tournament-upcoming-count').text(countUpcoming); 
+
+//////////////////////////////////////////
+
+    var situationTWO=22;
+
+    countPrevious = 0;
+
+    responseData.forEach(data => {
+
+    if (data.rental_price===situationTWO) { // Case-insensitive comparison
+
+      countPrevious = countPrevious + 1;
+
+    }
+
+    });
+
+    $('#display-tournament-previous-count').text(countPrevious); 
+
+//////////////////////////////////////////
 }

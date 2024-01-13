@@ -2,7 +2,7 @@
 
 ##
 
-sourceDirectory="../proving-grounds"
+sourceDirectory=".."
 
 appName="workr/updatr.py"
 
